@@ -1,9 +1,11 @@
 function keep_track(number) {
 	if (number==0) {
-		write_down("Welcome to my personal website.");
+		write_down("Welcome to my personal website."
+		);
 	}
 	else if (number==1) {
-		write_down("PLACEHOLDER");
+		write_down("PLACEHOLDER"
+		);
 	}
 	else if (number==2) {
 		write_down("No More adf.ly (Google chrome addon) <br>\
@@ -18,7 +20,8 @@ function keep_track(number) {
 	else if (number==3) {
 		write_down("I am a self-driven and mainly a self-learning Computer \
 		Science Student from University of Toronto. <br> You can reach me \
-		over at: berkay.antmen@mail.utoronto.ca");
+		over at: berkay.antmen@mail.utoronto.ca"
+		);
 	}
 }
 

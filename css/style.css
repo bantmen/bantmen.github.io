@@ -1,9 +1,16 @@
+body {
+	height: 100%;
+}
 #top{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 	border-radius: 15px;
 	height: 60px;
-	width: %60;
+	width: 80%;
 	background-color: #262C2A; 
 	color: #FFFFFF;
+	align: center;
 }
 #top_left{
 	margin: 15px;
@@ -36,10 +43,23 @@
 #text_box{
 	border-radius: 10px;
 	margin:0 auto;
-    margin-top: 50px;
+    margin-top: 25px;
     background-color: #FF794C;
     width: 70%;
     height: 150px;
     padding: 30px;
     /text-align: center;
+}
+#bottom_line{
+	/display: block;
+	/margin-top: auto;
+	border-bottom: 1px solid gray;
+	overflow: visible;
+    height: 9px;        
+    margin: 5px 0 10px 0;
+}
+#bottom_text{
+	text-align: center;
+	color: #888888;
+	font-size: 7.78px;
 }
