@@ -48,7 +48,7 @@ body {
     width: 70%;
     height: 250px;
     padding: 30px;
-    /text-align: center;
+	color: #FFFFFF;
 }
 #bottom_line{
 	position: absolute;
