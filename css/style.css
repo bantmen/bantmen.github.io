@@ -1,5 +1,5 @@
 body {
-	height: 100%;
+	height: 450px;
 }
 #top{
 	display: block;
@@ -51,12 +51,15 @@ body {
     /text-align: center;
 }
 #bottom_line{
+	/position: absolute;
+	bottom: 0;
 	/display: block;
 	/margin-top: auto;
 	border-bottom: 1px solid gray;
 	overflow: visible;
+	width: 100%;
     height: 9px;        
-    margin: 5px 0 10px 0;
+    margin: 180px 0 10px 0;
 }
 #bottom_text{
 	text-align: center;
