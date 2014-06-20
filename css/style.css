@@ -1,0 +1,45 @@
+#top{
+	border-radius: 15px;
+	height: 60px;
+	width: %60;
+	background-color: #262C2A; 
+	color: #FFFFFF;
+}
+#top_left{
+	margin: 15px;
+	float: left;
+}
+#top_right{
+	margin: 15px;
+	display: inline;
+	float: right;
+}
+#top_right button{  
+	outline: none;
+    cursor: pointer;
+    text-decoration: underline;
+    background:none;
+	border: none; 
+	padding: 0;
+	color: #FFFFFF;
+}
+#top_right ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#top_right li{
+	width: 80px;
+	display: inline-block;
+	text-align: center;
+}
+#text_box{
+	border-radius: 10px;
+	margin:0 auto;
+    margin-top: 50px;
+    background-color: #FF794C;
+    width: 70%;
+    height: 150px;
+    padding: 30px;
+    /text-align: center;
+}
