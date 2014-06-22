@@ -1,6 +1,9 @@
 body {
 	height: 450px;
 }
+a {
+	color: #FFFFFF;
+}
 #top{
 	display: block;
 	margin-left: auto;

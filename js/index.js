@@ -4,17 +4,20 @@ function keep_track(number) {
 		);
 	}
 	else if (number==1) {
-		write_down("PLACEHOLDER"
+		write_down("<a href='files/resume.pdf'>My resume"
 		);
 	}
 	else if (number==2) {
-		write_down("No More adf.ly (Google chrome addon) <br>\
+		write_down(
+		"No More adf.ly (Google chrome addon) <br>\
 		BandHacks (Single Page Web App) <br>\
 		Project Flow (Paypal Hackathon project) <br>\
-		Web Scrapper Projects <br>\
-			- Information of Toronto residents, based on their streets, from 411.ca <br>\
-			into an excel spreadsheet <br>\
-			- Project Rosi"
+		Web Crawler Projects <br>\
+			- Information of Toronto residents, based on their streets, transferred the information from <br>\
+			411.ca into an excel spreadsheet <br>\
+			- A simple web app that asks you for a professor and his course code and then gives you comments <br>\ 
+				about him from ratemyprofessors.com <br>\
+			- Stored all the of asos.com products names, prices and urls in a database"
 		);
 	}
 	else if (number==3) {
