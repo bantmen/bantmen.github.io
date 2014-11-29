@@ -4,7 +4,7 @@ function keep_track(number) {
 		);
 	}
 	else if (number==1) {
-		write_down("<a href='files/resume.pdf'>My resume"
+		write_down("You can contact me for my resume."
 		);
 	}
 	else if (number==2) {
