@@ -1,16 +1,25 @@
 body {
 	text-align:center;
-	text-rendering: optimizeLegibility;
-	font-feature-settings: "kern" 1;
-	font-kerning: normal;
+	//text-rendering: optimizeLegibility;
+	//font-feature-settings: "kern" 1;
+	//font-kerning: normal;
 	background: #585858;
 	color: #E6E6E6;
 	font-family: "myriad-pro",sans-serif;
 }
 
+h1 {
+	font-weight: 300;
+}
+
+h2 {
+	font-weight: 350;
+}
+
 #top {
 	position: relative;	
 }
+
 
 #text {
 	position: relative;
