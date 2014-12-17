@@ -9,10 +9,29 @@ body {
 }
 
 #top {
-	animation: w70 1s ease forwards;
+	position: relative;	
 }
 
-@keyframes w70 {
-    from { width: 0%; }
-    to { width: 70%; }
+#text {
+	position: relative;
+}
+
+#links {
+	position: relative;
+}
+
+#links > a {
+	color: #D7DF01;
+	transition: 0.5s color;
+}
+#links > a:hover {
+	color: #FF0000;
+	transition: 0.5s color;
+	//transform-origin: top;
+	//perspective: 600px;
+	//transition: 3s color, 0.3s transform;
+}
+#links > a.end {
+	transition: 3s color, 3s transform;
+	color: #FF0000;
 }
