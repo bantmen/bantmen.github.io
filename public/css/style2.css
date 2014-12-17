@@ -7,3 +7,12 @@ body {
 	color: #E6E6E6;
 	font-family: "myriad-pro",sans-serif;
 }
+
+#top {
+	animation: w70 1s ease forwards;
+}
+
+@keyframes w70 {
+    from { width: 0%; }
+    to { width: 70%; }
+}
