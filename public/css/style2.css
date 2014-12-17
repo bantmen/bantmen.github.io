@@ -29,9 +29,17 @@ h2 {
 	position: relative;
 }
 
+#links {
+	display: inline;
+	//float: left;
+	text-align: center;
+	margin-left: ;
+}
+
 #links > a {
 	color: #D7DF01;
 	transition: 0.5s color;
+	margin-left: 0.5em;
 }
 #links > a:hover {
 	color: #FF0000;
