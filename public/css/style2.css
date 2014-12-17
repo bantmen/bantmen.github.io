@@ -3,5 +3,7 @@ body {
 	text-rendering: optimizeLegibility;
 	font-feature-settings: "kern" 1;
 	font-kerning: normal;
-	background: #EEE;
+	background: #585858;
+	color: #E6E6E6;
+	font-family: "myriad-pro",sans-serif;
 }
