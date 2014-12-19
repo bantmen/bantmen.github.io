@@ -44,21 +44,30 @@ h2 {
 }
 
 #links {
-	margin-top: 1em;
+	//margin-top: 1em;
 	position: relative;
 }
 
-/* iPhone 4 ----------- */
-@media
-only screen and (-webkit-min-device-pixel-ratio : 1.5),
-only screen and (min-device-pixel-ratio : 1.5) {
-/* Styles */
+/*iPhone 2G-4S in portrait*/
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) 
+and (orientation : portrait) {
 	h1 {
 		font-size: 5em;
 	}
 
 	h2 {
 		font-size: 3em;
+	}
+	#top {
+		margin-top: 10em;
+	}
+	#links {
+		margin-top: 1em;
+	}
+	#links a {
+		font-size: 2em;
 	}
 }
 
@@ -67,7 +76,6 @@ only screen and (min-device-pixel-ratio : 1.5) {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
-/* Styles */
 	h1 {
 		font-size: 5em;
 	}
@@ -75,6 +83,25 @@ and (orientation : portrait) {
 	h2 {
 		font-size: 2.5em;
 	}
+	#links {
+		margin-top: 1em;
+	}
+	#links a {
+		font-size: 2em;
+	}
 }
 
 
+/* iPads (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+	h1 {
+		font-size: 2.5em;
+	}
+
+	h2 {
+		font-size: 1.5em;
+	}
+}
