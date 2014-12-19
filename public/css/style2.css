@@ -25,6 +25,9 @@ body {
 	transition: 3s color, 3s transform;
 	color: #FF0000;
 }
+#links > abbr {
+	color:;
+}
 
 h1 {
 	font-weight: 300;
