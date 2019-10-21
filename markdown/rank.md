@@ -56,7 +56,7 @@ Notice how the indices and values of $as$ seem to swap as they map to $2as$. For
 
 **Prove:** $A.argsort()[i] = idx(i, A)$ when $A = permutation(\{0, ..., len(A) - 1\})$. In other words, each value in the argsorted list corresponds to the index of the same value in the original list.
 
-Given $i \in A$, we know that there are exactly $i$ other numbers smaller than $i$ in $A$. Then by definition of `argsort`, `A.argsort()[i]` holds the index of $i$ i.e. $idx(i, A).
+Given $i \in A$, we know that there are exactly $i$ other numbers smaller than $i$ in $A$. Then by definition of `argsort`, `A.argsort()[i]` holds the index of $i$ i.e. $idx(i, A)$.
 
 ## Final remarks
 
