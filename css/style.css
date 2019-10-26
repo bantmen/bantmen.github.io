@@ -1,8 +1,5 @@
 body {
 	text-align:center;
-	//text-rendering: optimizeLegibility;
-	//font-feature-settings: "kern" 1;
-	//font-kerning: normal;
 	background: #585858;
 	color: #E6E6E6;
 	font-family: "myriad-pro",sans-serif;
@@ -17,9 +14,6 @@ body {
 #links > a:hover {
 	color: #FF0000;
 	transition: 0.5s color;
-	//transform-origin: top;
-	//perspective: 600px;
-	//transition: 3s color, 0.3s transform;
 }
 #links > a.end {
 	transition: 3s color, 3s transform;
@@ -38,7 +32,7 @@ h2 {
 }
 
 #top {
-	position: relative;	
+	position: relative;
 }
 
 
@@ -47,22 +41,32 @@ h2 {
 }
 
 #links {
-	//margin-top: 1em;
-	position: relative;
+	/* position: relative; */
+}
+
+.footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	margin-bottom: 5em;
 }
 
 /*iPhone 2G-4S in portrait*/
-@media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 480px) 
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px)
 and (orientation : portrait) {
 	h1 {
 		font-size: 5em;
 	}
-
 	h2 {
 		font-size: 3em;
 	}
+	h3 {
+		font-size: 1.5em;
+	}
+
 	#top {
 		margin-top: 10em;
 	}
@@ -75,17 +79,20 @@ and (orientation : portrait) {
 }
 
 /* iPads (portrait) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
 and (orientation : portrait) {
 	h1 {
 		font-size: 5em;
 	}
-
 	h2 {
 		font-size: 2.5em;
 	}
+	h3 {
+		font-size: 1.25em;
+	}
+
 	#links {
 		margin-top: 1em;
 	}
@@ -94,17 +101,18 @@ and (orientation : portrait) {
 	}
 }
 
-
 /* iPads (landscape) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
 and (orientation : landscape) {
 	h1 {
 		font-size: 2.5em;
 	}
-
 	h2 {
 		font-size: 1.5em;
+	}
+	h3 {
+		font-size: 0.75em;
 	}
 }
