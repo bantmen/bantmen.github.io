@@ -10,7 +10,6 @@
 
     gtag('config', 'UA-150451305-1');
   </script>
-
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -92,6 +91,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </head>
 <body>
 <h1 id="double-argsort-trick">Double argsort trick</h1>
+<p><em>Date: Oct 21, 2019</em></p>
 <p>If you search “rank numbers using numpy”, you will find <a href="https://stackoverflow.com/questions/5284646/rank-items-in-an-array-using-python-numpy-without-sorting-array-twice/">various resources</a> offering a mysterious solution:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> rank(array):</span>
 <span id="cb1-2"><a href="#cb1-2"></a>    <span class="cf">return</span> array.argsort().argsort()</span></code></pre></div>
@@ -121,8 +121,22 @@ as   -&gt; (0, 2), (1, 0), (2, 1), (3, 3)
 2as  -&gt; (0, 1), (1, 2), (2, 0), (3, 3)</code></pre>
 <p>Notice how the indices and values of <span class="math inline"><em>a</em><em>s</em></span> seem to swap as they map to <span class="math inline">2<em>a</em><em>s</em></span>. For instance, (0, 2) in <span class="math inline"><em>a</em><em>s</em></span> is now (2, 0) in <span class="math inline">2<em>a</em><em>s</em></span>, while the (index) value in <span class="math inline">2<em>a</em><em>s</em></span> is pointing at the original value in <span class="math inline"><em>a</em><em>s</em></span>.</p>
 <p><strong>Prove:</strong> <span class="math inline"><em>A</em>.<em>a</em><em>r</em><em>g</em><em>s</em><em>o</em><em>r</em><em>t</em>()[<em>i</em>] = <em>i</em><em>d</em><em>x</em>(<em>i</em>, <em>A</em>)</span> when <span class="math inline"><em>A</em> = <em>p</em><em>e</em><em>r</em><em>m</em><em>u</em><em>t</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em>({0, ..., <em>l</em><em>e</em><em>n</em>(<em>A</em>) − 1})</span>. In other words, each value in the argsorted list corresponds to the index of the same value in the original list.</p>
-<p>Given <span class="math inline"><em>i</em> ∈ <em>A</em></span>, we know that there are exactly <span class="math inline"><em>i</em></span> other numbers smaller than <span class="math inline"><em>i</em></span> in <span class="math inline"><em>A</em></span>. Then by definition of <code>argsort</code>, <code>A.argsort()[i]</code> holds the index of <span class="math inline"><em>i</em></span> i.e. $idx(i, A).</p>
+<p>Given <span class="math inline"><em>i</em> ∈ <em>A</em></span>, we know that there are exactly <span class="math inline"><em>i</em></span> other numbers smaller than <span class="math inline"><em>i</em></span> in <span class="math inline"><em>A</em></span>. Then by definition of <code>argsort</code>, <code>A.argsort()[i]</code> holds the index of <span class="math inline"><em>i</em></span> i.e. <span class="math inline"><em>i</em><em>d</em><em>x</em>(<em>i</em>, <em>A</em>)</span>.</p>
 <h2 id="final-remarks">Final remarks</h2>
 <p>While this is an interesting way to rank numbers, there are <a href="https://stackoverflow.com/a/5284703/3712254">more efficient ways</a> that sort once instead of twice (with additional linear time processing).</p>
+<p>Another interesting question is what happens if we continue calling <code>argsort</code> on the result itself. Continuing with our example above, we get:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort()</span>
+<span id="cb4-2"><a href="#cb4-2"></a>array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>])</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort()</span>
+<span id="cb4-4"><a href="#cb4-4"></a>array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span>])</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort().argsort()</span>
+<span id="cb4-6"><a href="#cb4-6"></a>array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>])</span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort().argsort().argsort()</span>
+<span id="cb4-8"><a href="#cb4-8"></a>array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span>])</span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort().argsort().argsort().argsort()</span>
+<span id="cb4-10"><a href="#cb4-10"></a>array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>])</span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort().argsort().argsort().argsort().argsort()</span>
+<span id="cb4-12"><a href="#cb4-12"></a>array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span>])</span></code></pre></div>
+<p>A cycle? Yes, interestingly enough, we have already proven why. Our lemma above proves that as long as the <code>argsort</code> input is a permutation of integers (in the array’s index domain), then the output will be a swap of the values and the indices; combining this with the fact that the prerequisite input property is an invariant under <code>argsort</code>, we get the cyclic property.</p>
 </body>
 </html>

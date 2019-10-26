@@ -1,5 +1,7 @@
 # Double argsort trick
 
+_Date: Oct 21, 2019_
+
 If you search "rank numbers using numpy", you will find [various resources](https://stackoverflow.com/questions/5284646/rank-items-in-an-array-using-python-numpy-without-sorting-array-twice/) offering a mysterious solution:
 
 ```python
@@ -13,7 +15,7 @@ Before we start, what is __ranking__? For the ascending case, ranking is assigni
 
 ## Example
 
-Quoting [`numpy.argsort` documentation]((https://docs.scipy.org/doc/numpy/reference/generated/numpy.argsort.html)), "[argsort] Returns the indices that would sort an array.". For simplicity, let us assume that our array does not have duplicates. 
+Quoting [`numpy.argsort` documentation]((https://docs.scipy.org/doc/numpy/reference/generated/numpy.argsort.html)), "[argsort] Returns the indices that would sort an array.". For simplicity, let us assume that our array does not have duplicates.
 
 ```python
 >>> import numpy as np
@@ -28,9 +30,9 @@ The final result indeed corresponds to rank of each number.
 
 ## Proof
 
-Let $as := nums.argsort()$ and $2as := as.argsort()$. 
+Let $as := nums.argsort()$ and $2as := as.argsort()$.
 
-__1)__ Define $idx(i, array)$ to be the index of $i$ in $array$ e.g. $idx(2, [0, 2, 1]) = 1$. 
+__1)__ Define $idx(i, array)$ to be the index of $i$ in $array$ e.g. $idx(2, [0, 2, 1]) = 1$.
 
 __2)__ From the definition of `argsort`, we know that $\forall i, j \in as,\ idx(i, as) > idx(j, as) \Rightarrow nums[i] > nums[j]$.
 
@@ -61,3 +63,21 @@ Given $i \in A$, we know that there are exactly $i$ other numbers smaller than $
 ## Final remarks
 
 While this is an interesting way to rank numbers, there are [more efficient ways](https://stackoverflow.com/a/5284703/3712254) that sort once instead of twice (with additional linear time processing).
+
+Another interesting question is what happens if we continue calling `argsort` on the result itself. Continuing with our example above, we get:
+```python
+>>> nums.argsort()
+array([2, 0, 1, 3])
+>>> nums.argsort().argsort()
+array([1, 2, 0, 3])
+>>> nums.argsort().argsort().argsort()
+array([2, 0, 1, 3])
+>>> nums.argsort().argsort().argsort().argsort()
+array([1, 2, 0, 3])
+>>> nums.argsort().argsort().argsort().argsort().argsort()
+array([2, 0, 1, 3])
+>>> nums.argsort().argsort().argsort().argsort().argsort().argsort()
+array([1, 2, 0, 3])
+```
+
+A cycle? Yes, interestingly enough, we have already proven why. Our lemma above proves that as long as the `argsort` input is a permutation of integers (in the array's index domain), then the output will be a swap of the values and the indices; combining this with the fact that the prerequisite input property is an invariant under `argsort`, we get the cyclic property.
