@@ -74,10 +74,6 @@ array([1, 2, 0, 3])
 array([2, 0, 1, 3])
 >>> nums.argsort().argsort().argsort().argsort()
 array([1, 2, 0, 3])
->>> nums.argsort().argsort().argsort().argsort().argsort()
-array([2, 0, 1, 3])
->>> nums.argsort().argsort().argsort().argsort().argsort().argsort()
-array([1, 2, 0, 3])
 ```
 
 A cycle? Yes, interestingly enough, we have already proven why. Our lemma above proves that as long as the `argsort` input is a permutation of integers (in the array's index domain), then the output will be a swap of the values and the indices; combining this with the fact that the prerequisite input property is an invariant under `argsort`, we get the cyclic property.
