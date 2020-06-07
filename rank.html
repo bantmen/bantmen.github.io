@@ -1,29 +1,20 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150451305-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-150451305-1');
-  </script>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Double argsort</title>
-  <style>
+  <style type="text/css">
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <style>
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -33,16 +24,14 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -51,9 +40,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -85,26 +74,23 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <h1 id="double-argsort-trick">Double argsort trick</h1>
 <p><em>Date: Oct 21, 2019</em></p>
 <p>If you search “rank numbers using numpy”, you will find <a href="https://stackoverflow.com/questions/5284646/rank-items-in-an-array-using-python-numpy-without-sorting-array-twice/">various resources</a> offering a mysterious solution:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> rank(array):</span>
-<span id="cb1-2"><a href="#cb1-2"></a>    <span class="cf">return</span> array.argsort().argsort()</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">def</span> rank(array):</a>
+<a class="sourceLine" id="cb1-2" title="2">    <span class="cf">return</span> array.argsort().argsort()</a></code></pre></div>
 <p>Yes, that is it, and it works. But, why? As I could not find an answer to that, I will try to bring some clarity here.</p>
 <p>Before we start, what is <strong>ranking</strong>? For the ascending case, ranking is assigning values to numbers such that each value denotes the index of its corresponding number in a would-be sorted list. For example, we want <code>rank([1, 2, 0, 3])</code> to return <code>[1, 2, 0, 3]</code>. In other words, we want the <em>order</em> of each number.</p>
 <h2 id="example">Example</h2>
-<p>Quoting <a href="(https://docs.scipy.org/doc/numpy/reference/generated/numpy.argsort.html)"><code>numpy.argsort</code> documentation</a>, “[argsort] Returns the indices that would sort an array.”. For simplicity, let us assume that our array does not have duplicates.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="op">&gt;&gt;&gt;</span> nums <span class="op">=</span> np.array([<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">10</span>])</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort()</span>
-<span id="cb2-4"><a href="#cb2-4"></a>array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>])</span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort()</span>
-<span id="cb2-6"><a href="#cb2-6"></a>array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span>])</span></code></pre></div>
+<p>Quoting <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.argsort.html"><code>numpy.argsort</code> documentation</a>, “[argsort] Returns the indices that would sort an array.”. For simplicity, let us assume that our array does not have duplicates.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1"><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="op">&gt;&gt;&gt;</span> nums <span class="op">=</span> np.array([<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">10</span>])</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="op">&gt;&gt;&gt;</span> nums.argsort()</a>
+<a class="sourceLine" id="cb2-4" title="4">array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort()</a>
+<a class="sourceLine" id="cb2-6" title="6">array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span>])</a></code></pre></div>
 <p>The final result indeed corresponds to rank of each number.</p>
 <h2 id="proof">Proof</h2>
 <p>Let <span class="math inline"><em>a</em><em>s</em> := <em>n</em><em>u</em><em>m</em><em>s</em>.<em>a</em><em>r</em><em>g</em><em>s</em><em>o</em><em>r</em><em>t</em>()</span> and <span class="math inline">2<em>a</em><em>s</em> := <em>a</em><em>s</em>.<em>a</em><em>r</em><em>g</em><em>s</em><em>o</em><em>r</em><em>t</em>()</span>.</p>
@@ -125,14 +111,14 @@ as   -&gt; (0, 2), (1, 0), (2, 1), (3, 3)
 <h2 id="final-remarks">Final remarks</h2>
 <p>While this is an interesting way to rank numbers, there are <a href="https://stackoverflow.com/a/5284703/3712254">more efficient ways</a> that sort once instead of twice (with additional linear time processing).</p>
 <p>Another interesting question is what happens if we continue calling <code>argsort</code> on the result itself. Continuing with our example above, we get:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort()</span>
-<span id="cb4-2"><a href="#cb4-2"></a>array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>])</span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort()</span>
-<span id="cb4-4"><a href="#cb4-4"></a>array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span>])</span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort().argsort()</span>
-<span id="cb4-6"><a href="#cb4-6"></a>array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>])</span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort().argsort().argsort()</span>
-<span id="cb4-8"><a href="#cb4-8"></a>array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" title="1"><span class="op">&gt;&gt;&gt;</span> nums.argsort()</a>
+<a class="sourceLine" id="cb4-2" title="2">array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort()</a>
+<a class="sourceLine" id="cb4-4" title="4">array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort().argsort()</a>
+<a class="sourceLine" id="cb4-6" title="6">array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="op">&gt;&gt;&gt;</span> nums.argsort().argsort().argsort().argsort()</a>
+<a class="sourceLine" id="cb4-8" title="8">array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span>])</a></code></pre></div>
 <p>A cycle? Yes, interestingly enough, we have already proven why. Our lemma above proves that as long as the <code>argsort</code> input is a permutation of integers (in the array’s index domain), then the output will be a swap of the values and the indices; combining this with the fact that the prerequisite input property is an invariant under <code>argsort</code>, we get the cyclic property.</p>
 </body>
 </html>

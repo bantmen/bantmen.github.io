@@ -15,7 +15,7 @@ Before we start, what is __ranking__? For the ascending case, ranking is assigni
 
 ## Example
 
-Quoting [`numpy.argsort` documentation]((https://docs.scipy.org/doc/numpy/reference/generated/numpy.argsort.html)), "[argsort] Returns the indices that would sort an array.". For simplicity, let us assume that our array does not have duplicates.
+Quoting [`numpy.argsort` documentation](https://docs.scipy.org/doc/numpy/reference/generated/numpy.argsort.html), "[argsort] Returns the indices that would sort an array.". For simplicity, let us assume that our array does not have duplicates.
 
 ```python
 >>> import numpy as np
